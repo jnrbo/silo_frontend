@@ -1,0 +1,27 @@
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Silo
+        </title>
+        <script src="axios.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+
+    <body>
+        <input id="input_login" type="text" placeholder="Login">
+        <br>
+        <input id="input_password" type="password" placeholder="Senha">
+        <br>
+        <button type="button" onclick="login()">Enviar</button>
+    </body>
+    <script>
+        function login() {
+            var valor_do_campo_login = document.getElementById("input_login").value;
+            var valor_do_campo_senha = document.getElementById("input_password").value;
+            alert(valor_do_campo_login);
+            alert(valor_do_campo_senha);
+        }
+    </script>
+</html>
