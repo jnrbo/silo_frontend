@@ -10,9 +10,11 @@
     </head>
     <body onload="start()">
 
-        <div id="container-volume"></div>
-        <div id="container-umidade"></div>
-        <div id="container-temperatura"></div>
+        <div id="container-volume" style="height: 300px;"></div>
+        <br>
+        <div id="container-umidade" style="height: 300px;"></div>
+        <br>
+        <div id="container-temperatura" style="height: 300px;"></div>
 
     </body>
 
@@ -25,16 +27,25 @@
 
         function start() {
 
-            var silos = getSilos();
+            getSilos(
+                function (silos) {
+                    baixou(silos)
+                },
+                function (erro) {
+                    alert(erro);
+                }
+            );
+        }
 
-            for (var i=0; i < silos.length; i++){
-              var silo = silos[i];
+        function baixou(silos) {
+            for (var i = 0; i < silos.length; i++){
+                var silo = silos[i];
 
-              temperaturas.push(silo.temperature);
-              volumes.push(silo.volume);
-              umidades.push(silo.humidity);
+                temperaturas.push(silo.temperature);
+                volumes.push(silo.volume);
+                umidades.push(silo.humidity);
 
-              datas.push(silo.date);
+                datas.push(silo.date);
             }
 
             graficoVolume();
@@ -48,7 +59,7 @@
                     type: 'line'
                 },
                 title: {
-                    text: 'Histórico Silo - Volume'
+                    text: 'Histórico Silo'
                 },
                 xAxis: {
                     categories: datas
@@ -73,10 +84,12 @@
                 xAxis: {
                     categories: datas
                 },
-                series: [{
-                    name: 'Umidade (g/Kg)',
-                    data: umidades
-                }]
+                series: [
+                    {
+                        name: 'Umidade (g/Kg)',
+                        data: umidades
+                    }
+                ]
             });
         }
 
@@ -91,10 +104,12 @@
                 xAxis: {
                     categories: datas
                 },
-                series: [{
-                    name: 'Temperatura (Celsius)',
-                    data: temperaturas
-                }]
+                series: [
+                    {
+                        name: 'Temperatura (Celsius)',
+                        data: temperaturas
+                    }
+                ]
             });
         }
 

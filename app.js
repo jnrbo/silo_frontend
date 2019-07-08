@@ -1,3 +1,12 @@
+function setUser(user) {
+    localStorage.setItem("USER", JSON.stringify(user));
+}
+
+function getUser() {
+    return JSON.parse(localStorage.getItem("USER"));
+}
+
+
 // axios - usado para fazer requisicoes
 var axiosInstance = axios.create({
     baseURL: 'http://localhost:3000',
@@ -10,17 +19,8 @@ var axiosInstance = axios.create({
     },
 });
 
-// axiosInstance came from app.js
-
-function setUser(user) {
-    localStorage.setItem("USER", JSON.stringify(user));
-}
-
-function getUser() {
-    return JSON.parse(localStorage.getItem("USER"));
-}
-
 function performLogin(username, password, success, error) {
+    console.log(username);
     axiosInstance.get('/user/login', {
         params: {
             username: username,
@@ -35,38 +35,42 @@ function performLogin(username, password, success, error) {
             error(data.error);
         }
     }).catch(function (re) {
-        loginPage()
+        alert('Erro!');
     });
 }
 
 
 
-function getSilos() {
-    var arrays = [];
-
-    arrays.push(
-        {
-            temperature: 20,
-            humidity: 15,
-            volume: 49,
-            date: '2019-07-20'
+function getSilos(success, error) {
+    axiosInstance.get('/silo/', {}).then(function (response) {
+        var data = response.data;
+        if (data.success) {
+            success(data.silos);
+        } else {
+            error(data.error);
         }
-
-    );
-
-    arrays.push({
-        temperature: 14,
-        humidity: 13,
-        volume: 59,
-        date: '2019-07-21'
+    }).catch(function (re) {
+        alert('DEU ERRO!');
     });
-
-    arrays.push({
-        temperature: 16,
-        humidity: 14,
-        volume: 32,
-        date: '2019-07-22'
-    });
-
-    return arrays;
 }
+
+//
+// function saveSilo(volume, humidity, temperature, success, error) {
+//     var body = {
+//         volume: volume,
+//         humidity: humidity,
+//         temperature: temperature,
+//     };
+//
+//     axiosInstance.post('/silo/', body).then(function (response) {
+//         var data = response.data;
+//
+//         if (data.success) {
+//             success(data.silo);
+//         } else {
+//             error(data.error);
+//         }
+//     }).catch(function (re) {
+//         alert('Erro!');
+//     });
+// }

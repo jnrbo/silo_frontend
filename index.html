@@ -1,27 +1,61 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
     <head>
         <meta charset="UTF-8">
         <title>
             Silo
         </title>
-        <script src="axios.min.js"></script>
+        <script src="axios.min.js"></script> http
         <script src="app.js"></script>
     </head>
 
     <body>
-        <input id="input_login" type="text" placeholder="Login">
-        <br>
-        <input id="input_password" type="password" placeholder="Senha">
-        <br>
-        <button type="button" onclick="login()">Enviar</button>
+        <div id="formulario">
+            <input id="input_login" type="text" placeholder="Login">
+            <br>
+            <input id="input_password" type="password" placeholder="Senha">
+            <br>
+            <button type="button" onclick="login()">Enviar</button>
+        </div>
     </body>
+
+    <style>
+        #formulario {
+            width: 400px;
+            margin: 10% auto;
+        }
+
+        input, button {
+            font-size: 20px;
+            margin: 10px;
+            width: 350px;
+            padding: 15px 15px;
+        }
+
+        button {
+            color: white;
+            background: green;
+        }
+
+        body {
+            background: #702be6;
+        }
+    </style>
     <script>
         function login() {
-            var valor_do_campo_login = document.getElementById("input_login").value;
-            var valor_do_campo_senha = document.getElementById("input_password").value;
-            alert(valor_do_campo_login);
-            alert(valor_do_campo_senha);
+            var username = document.getElementById('input_login').value;
+            var password = document.getElementById('input_password').value;
+
+            performLogin(username, password,
+                function (user) {
+                    setUser(user);
+                    window.location.href = "grafico.html";
+                },
+                function (error) {
+                    alert('Error: ' + error);
+                }
+            );
         }
     </script>
 </html>
